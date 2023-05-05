@@ -13,40 +13,38 @@ library( htmltools )
 library( dplyr )
 ```
 
-```         
-<div class="parent">
-  <div class="div1"><h4>VarName_01_X</h4></div>
-  
-  <div class="div2">
-    Ipsum is simply dummy text of the printing and typesetting industry. 
-  </div>
-  
-  <div class="div3">
-    <table>
-  <tr>
+    <div class="parent">
+      <div class="div1"><h4>VarName_01_X</h4></div>
+      
+      <div class="div2">
+        Ipsum is simply dummy text of the printing and typesetting industry. 
+      </div>
+      
+      <div class="div3">
+        <table>
+      <tr>
     <td>DATA TYPE</td>
     <td>numeric</td>
-  </tr>
-  <tr>
+      </tr>
+      <tr>
     <td>SCOPE</td>
     <td>PZ</td>
-  </tr>
-  <tr>
+      </tr>
+      <tr>
     <td>LENGTH</td>
     <td>6</td>
-  </tr>
-</table>
-  </div>
-  
-  <div class="div4">
-    DEFINITION: Lorem Ipsum is simply dummy text of the printing and typesetting 
-    industry. Lorem Ipsum has been the industry's standard dummy text ever since 
-    the 1500s, when an unknown printer took a galley of type and scrambled it to 
-    make a type specimen book.
-  </div>
+      </tr>
+    </table>
+      </div>
+      
+      <div class="div4">
+        DEFINITION: Lorem Ipsum is simply dummy text of the printing and typesetting 
+        industry. Lorem Ipsum has been the industry's standard dummy text ever since 
+        the 1500s, when an unknown printer took a galley of type and scrambled it to 
+        make a type specimen book.
+      </div>
 
-</div>
-```
+    </div>
 
 ::: parent
 ::: div1
@@ -109,12 +107,10 @@ v.layout <-
 print( v.layout )
 ```
 
-
 ```{r}
 #| output: asis
 v.layout
 ```
-
 
 ```{r, results="asis"}
 
@@ -197,14 +193,6 @@ for( i in 1:25 )
 
 renderTags( rlist )$html
 ```
-
-
-
-
-
-
-
-
 
 <link href='https://fonts.googleapis.com/css?family=Fira Code' rel='stylesheet'> <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Anonymous+Pro" />
 
