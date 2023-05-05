@@ -1,0 +1,478 @@
+---
+title: "Research Guide HTML FUNCTIONS"
+format:
+  html:
+    embed-resources: true
+editor: visual
+---
+
+<br><br><br>
+
+```{r, warning=F, message=F}
+library( htmltools )
+library( dplyr )
+```
+
+```         
+<div class="parent">
+  <div class="div1"><h4>VarName_01_X</h4></div>
+  
+  <div class="div2">
+    Ipsum is simply dummy text of the printing and typesetting industry. 
+  </div>
+  
+  <div class="div3">
+    <table>
+  <tr>
+    <td>DATA TYPE</td>
+    <td>numeric</td>
+  </tr>
+  <tr>
+    <td>SCOPE</td>
+    <td>PZ</td>
+  </tr>
+  <tr>
+    <td>LENGTH</td>
+    <td>6</td>
+  </tr>
+</table>
+  </div>
+  
+  <div class="div4">
+    DEFINITION: Lorem Ipsum is simply dummy text of the printing and typesetting 
+    industry. Lorem Ipsum has been the industry's standard dummy text ever since 
+    the 1500s, when an unknown printer took a galley of type and scrambled it to 
+    make a type specimen book.
+  </div>
+
+</div>
+```
+
+::: parent
+::: div1
+<h4>VarName_01_X</h4>
+:::
+
+::: div2
+Ipsum is simply dummy text of the printing and typesetting industry.
+:::
+
+::: div3
+|           |         |
+|-----------|---------|
+| DATA TYPE | numeric |
+| SCOPE     | PZ      |
+| LENGTH    | 6       |
+:::
+
+::: div4
+DEFINITION: Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.
+:::
+:::
+
+```{r}
+
+vname    <- "F9_00_ALL_AFFIL_INCL_X"        
+v.label  <- "All subordinates included"   
+vtype    <- "checkbox"                   
+vscope   <- "HD"                          
+vdesc    <- "Indicates this form includes all subordinate organizations"
+
+
+v.layout <- 
+  tagList(
+    
+    div( class="parent",
+         
+    div( class="div1", h4( vname ) ),
+    div( class="div2", p(v.label)  ), 
+    
+    div( class="div3", withTags(
+
+      table(
+              tr(
+                  td( "DATA TYPE"  ),
+                  td( vtype  )
+                ),
+
+              tr(
+                  td( "SCOPE"  ),
+                  td( vscope  )
+                )
+           )
+
+    ) ),
+  
+    div( class="div4", p( paste0( "DESCRIPTION: ", vdesc ) )  ) 
+  ) )
+
+print( v.layout )
+
+```
+
+```{r, results="asis"}
+
+containerize_v <- function( vname, vlabel, vtype, vscope, vdesc )
+{
+  v <- 
+  tagList(
+    
+    div( class="parent",
+         
+      div( class="div1", h4( vname ) ),
+      div( class="div2", p(v.label)  ), 
+      
+      div( class="div3", withTags(
+  
+        table(
+                tr(
+                    td( "DATA TYPE"  ),
+                    td( vtype  )
+                  ),
+  
+                tr(
+                    td( "SCOPE"  ),
+                    td( vscope  )
+                  )
+             )
+  
+      ) ),
+    
+      div( class="div4", p( paste0( "DESCRIPTION: ", vdesc ) )  )
+    
+    ),
+    
+    withTags(  HTML("<br><hr><br>"), p('\n')  )
+   
+  )
+  
+  return(v)
+} 
+
+
+containerize_v( vname, vlabel, vtype, vscope, vdesc )
+```
+
+```{r}
+dat <- read.csv( "concordance-v98.csv" )
+names( dat ) <- toupper( names( dat ) )
+
+# remove special characters that will 
+# wreck table formatting like ($) 
+dat$DESCRIPTION <- gsub( "\\(\\$\\)[ ]{0,1}", "", dat$DESCRIPTION )
+dat$LABEL <- gsub( "\\(\\$\\)[ ]{0,1}", "", dat$LABEL )
+
+d <- dplyr::sample_n( dat, 5 )
+```
+
+```{r, results="asis"}
+#| output: asis
+#| 
+rlist <- list()
+
+for( i in 1:3 )
+{
+  namev   <- d$VARIABLE_NAME[i] 
+  labelv  <- d$LABEL[i] 
+  dts     <- d$DATA_TYPE_SIMPLE[i] 
+  scopev  <- d$VARIABLE_SCOPE[i] 
+  descr   <- d$DESCRIPTION[i] 
+  
+  var.info <- 
+  containerize_v( vname=namev, 
+                  vlabel=labelv, 
+                  vtype=dts, 
+                  vscope=scopev, 
+                  vdesc=descr ) 
+
+  rlist[[i]] <- var.info
+  
+  renderTags( var.info )$html  
+
+  message( var.info )
+}
+
+html.list <- rlist
+rlist <- as.list( rlist )
+```
+
+
+```{r}
+renderTags( html.list[[1]] )$html 
+```
+
+```{r}
+#| output: asis
+renderTags( html.list[[1]] )$html 
+```
+
+```{r}
+renderTags( html.list )$html 
+```
+
+
+```{r}
+#| output: asis
+renderTags( html.list )$html 
+```
+
+
+```{r}
+#| output: asis
+renderTags( rlist[[1]] )$html 
+```
+
+
+```{r}
+#| output: asis
+renderTags( rlist )$html 
+```
+
+
+
+```{r}
+#| output: asis
+
+lapply( rlist, message )
+```
+
+```{r, results='asis'}
+#| output: asis
+
+lapply( rlist, message )
+```
+
+```{r}
+#| output: asis
+lapply( rlist, message )
+```
+
+```{r, results='asis'}
+#| output: asis
+for( item in rlist ){ message(item) }
+```
+
+```{r}
+#| output: asis
+for( item in rlist ){ cat(message(item)) }
+```
+
+```{r}
+#| output: asis
+for( item in rlist ){ print(message(item)) }
+```
+
+```{r}
+#| output: asis
+print( rlist )
+```
+
+```{r}
+#| output: asis
+print( rlist[[1]] )
+```
+
+```{r}
+print( rlist[[1]] )
+```
+
+```{r}
+for( i in 1:3 )
+{
+  renderTags( rlist[[i]] )$html
+}
+```
+
+```{r, results="asis"}
+for( i in 1:3 )
+{
+  renderTags( rlist[[i]] )$html
+}
+```
+
+```{r, resultts="asis"}
+get_taglist <- function(x)
+{
+  x <- renderTags( x )$html
+  return( x )
+}
+
+ls <- lapply( rlist, get_taglist ) 
+
+
+for( item in ls ){ message(item)}
+
+```
+
+```{r}
+for( i in 1:3 )
+{
+  renderTags( rlist[[1]] )$html %>% print()
+}
+```
+
+```{r, results="asis"}
+for( i in 1:3 )
+{
+  renderTags( rlist[[1]] )$html %>% print()
+}
+```
+
+```{r, results="asis"}
+renderTags( rlist[[1]] )$html %>% cat()
+```
+
+```{r, eval=F, echo=F}
+  loop.i <- 
+    withTags(
+              div( class = 'RESEARCHGUIDE',
+                h1( namev ),
+                h3( labelv ),
+                table(
+                  tr(
+                     td( h3( 'DATA TYPE: ', dts )),
+                     td( p(  'DEFINITION: ', descr ))   # rowspan = 2,
+                    ),
+                  tr(
+                     td( h3( 'SCOPE: ', scopev ))
+                    ),
+                ) # table
+              )   # div
+             )    # withTags
+  
+  print( loop.i )
+```
+
+<link href='https://fonts.googleapis.com/css?family=Fira Code' rel='stylesheet'> <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Anonymous+Pro" />
+
+```{=html}
+<style>
+
+@import url('https://fonts.cdnfonts.com/css/aharoni');
+
+.parent {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;  /* repeat(2, 0.2fr) 1fr 1fr; */
+    grid-column-gap: 20px;
+    grid-row-gap: 10px;
+    grid-template-areas:
+      "a a a"
+      "b b b"
+      "c d d"
+      "e e e" ;
+}
+
+/* grid-row-start / grid-column-start / grid-row-end / grid-column-end */
+/* .div1 { grid-area: 1 / 1 / 2 / 4; } */
+/* .div2 { grid-area: 2 / 1 / 3 / 4; } */
+/* .div3 { grid-area: 3 / 1 / 4 / 2; } */
+/* .div4 { grid-area: 3 / 2 / 4 / 4; } */
+
+
+.div1 { grid-area: a; }
+
+.div2 { 
+    grid-area: b;
+    padding-left: 50px;
+}
+
+.div3 { 
+    grid-area: c;
+    padding-left: 50px;
+}
+
+.div4 { 
+    grid-area: d;
+    padding-left: 20px;
+}
+
+.div5 { 
+    grid-area: e;
+    padding-left: 50px;
+}
+
+h1.title { color: lightgray; }
+h2.anchored { color: lightgray; }
+h3.anchored { color: gray; }
+
+h4 {
+    text-decoration: underline;
+    text-underline-offset: 10px;
+    text-decoration-thickness: 2px;
+    font-family: Georgia, Times, "Times New Roman", serif; 
+    /* font-family: 'Fira Code'; */
+    /* font-family: 'Aharoni', sans-serif; */
+    font-size: 2.2em;
+    font-weight: 700;  
+    /* line-height: 120px; */ 
+}
+
+h5 { font-size: 0.9em; }
+
+.div2 p { 
+    font-family: Verdana;
+    font-size: 1.1em;
+}
+
+.div3 td { 
+    /* font-family: "Anonymous Pro"; */
+    /* font-family: Georgia, Times, "Times New Roman", serif; */ 
+    /* font-weight: 400; */
+    font-family: 'Aharoni', sans-serif;
+    font-size: 0.9em;
+}
+
+.div4 p { 
+    font-family:"Calibri", sans-serif;
+    font-size: 0.8em;
+}
+
+.div4 td { 
+    font-family: "Anonymous Pro";
+    /* font-weight: 400; */
+    font-size: 0.9em;
+}
+
+.div4 table {
+    margin-left: 20px;
+}
+
+.div5 td { 
+    font-family: "Anonymous Pro";
+    /* font-weight: 400; */
+    font-size: 0.9em;
+}
+
+.div5 table {
+    margin-left: 20px;
+}
+
+.table>tbody {
+    border-top: none;
+}
+
+.table>:not(caption)>*>* {
+    padding: 0rem 0rem;
+}
+
+tbody, tfoot, tr, td, th {
+    border-color: inherit;
+    border-style: none; 
+    border-width: 0;
+}
+
+
+#pb_agent .gt_table {
+    border-top-width: 0px; 
+    /* border-top-color: #A8A8A8; */
+}  
+
+#pb_agent .gt_title {
+    font-size: 1.3em !important;
+}
+
+#pb_agent .gt_left { color: black !important; }
+
+</style>
+```
