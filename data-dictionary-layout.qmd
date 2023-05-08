@@ -1,5 +1,5 @@
 ---
-title: "Data Dictionary HTML FUNCTIONS"
+title: "Data Dictionary"
 format:
   html:
     embed-resources: true
@@ -8,12 +8,12 @@ editor: visual
 
 <br><br><br>
 
-```{r, warning=F, message=F}
+```{r, warning=F, message=F, include=F}
 library( htmltools )
 library( dplyr )
 ```
 
-```{r, results="asis"}
+```{r, results="asis", include=F}
 
 containerize_v <- function( vname, vlabel, vtype, vscope, vdesc, lcode )
 {
@@ -50,7 +50,7 @@ containerize_v <- function( vname, vlabel, vtype, vscope, vdesc, lcode )
 } 
 ```
 
-```{r}
+```{r, include=F}
 dat <- read.csv( "concordance-v98.csv" )
 names( dat ) <- toupper( names( dat ) )
 
@@ -60,18 +60,26 @@ dat$DESCRIPTION <- gsub( "\\(\\$\\)[ ]{0,1}", "", dat$DESCRIPTION )
 dat$LABEL <- gsub( "\\(\\$\\)[ ]{0,1}", "", dat$LABEL )
 
 # use location codes if family code is missing 
-  dat$LOCATION_CODE_FAMILY[ is.na(dat$LOCATION_CODE_FAMILY) ] <- 
-  dat$LOCATION_CODE[ is.na(dat$LOCATION_CODE_FAMILY) ]
+dat$LOCATION_CODE_FAMILY[ is.na(dat$LOCATION_CODE_FAMILY) ] <- 
+dat$LOCATION_CODE[ is.na(dat$LOCATION_CODE_FAMILY) ]
 
-d <- dplyr::sample_n( dat, 25 )
+# select the table you want
+tbl <- "F9-P00-T00-HEADER" #type the table name here
+d <- dat %>% filter ( RDB_TABLE == tbl )
 ```
 
-```{r, results="asis"}
+```{r, results="asis", echo=F}
 #| output: asis
 
 rlist <- list()
 
-for( i in 1:25 )
+withTags( 
+  div( class = "div7",
+       h1(tbl)
+  )
+)
+
+for( i in 1:nrow(d) )
 {
   vname   <- d$VARIABLE_NAME[i] 
   vlabel  <- d$LABEL[i] 
@@ -179,6 +187,13 @@ renderTags( rlist )$html
     font-family:"Calibri", sans-serif;
     color: #AF3C00;
     font-size: 1em;
+}
+
+.div7 h1 { 
+    font-family:"Calibri", sans-serif;
+    font-size: 2em;
+    background-color: gray;
+    color: white;
 }
 
 .table>tbody {
