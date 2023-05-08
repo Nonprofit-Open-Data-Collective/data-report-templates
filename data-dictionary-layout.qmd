@@ -63,9 +63,10 @@ dat$LABEL <- gsub( "\\(\\$\\)[ ]{0,1}", "", dat$LABEL )
 dat$LOCATION_CODE_FAMILY[ is.na(dat$LOCATION_CODE_FAMILY) ] <- 
 dat$LOCATION_CODE[ is.na(dat$LOCATION_CODE_FAMILY) ]
 
-# select the table you want
-tbl <- "F9-P00-T00-HEADER" #type the table name here
-d <- dat %>% filter ( RDB_TABLE == tbl )
+# select the form and part you want
+forms <- "SCHED-A" #type the form or schedule here
+part <- "PART-01" #type the part here
+d <- dat %>% filter ( FORM == forms & FORM_PART == part )
 ```
 
 ```{r, results="asis", echo=F}
@@ -75,7 +76,7 @@ rlist <- list()
 
 withTags( 
   div( class = "div7",
-       h1(tbl)
+       h1( paste( forms, part, sep = " " ))
   )
 )
 
