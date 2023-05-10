@@ -1,0 +1,215 @@
+---
+title: "Data Dictionary"
+format:
+  html:
+    embed-resources: true
+editor: visual
+---
+
+<br><br><br>
+
+```{r, warning=F, message=F, include=F}
+library( htmltools )
+library( dplyr )
+library( pointblank )
+```
+
+```{r, results="asis", include=F}
+
+containerize_v <- function( vname, vlabel, vtype, vscope, vdesc, vlevels, lcode )
+{
+  v <- 
+  tagList(
+    
+    div( class="parent",
+      div( class="div1", p( paste0( vname, ".........." ) ) ),
+      div( class="div2", p( vlabel ) ), 
+      div( class="div3", withTags(
+        table(
+                tr(
+                    td( "DATA TYPE: " ),
+                    td( vtype  )
+                  ),
+                tr(
+                    td( "SCOPE: "  ),
+                    td( vscope  )
+                  )
+             )
+      ) ),
+      div( class="div4", withTags(
+        table(
+                tr(
+                    td( "DESCRIPTION: " ),
+                    td( vdesc )
+                  ),
+                tr(
+                    td( "VARIABLE LEVELS: "),
+                    td( vlevels)
+                  ),
+                tr(
+                    td( "LOCATION CODE: " ),
+                    td( lcode )
+                  )
+             )
+    ) )
+    ),
+    withTags(  HTML("<br><hr><br>"), p('\n')  )
+  )
+  return(v)
+} 
+```
+
+```{r, include=F}
+dat <- read.csv( "concordance-v98.csv" )
+names( dat ) <- toupper( names( dat ) )
+
+# remove special characters that will 
+# wreck table formatting like ($) 
+dat$DESCRIPTION <- gsub( "\\(\\$\\)[ ]{0,1}", "", dat$DESCRIPTION )
+dat$LABEL <- gsub( "\\(\\$\\)[ ]{0,1}", "", dat$LABEL )
+
+# use location codes if family code is missing 
+dat$LOCATION_CODE_FAMILY[ is.na(dat$LOCATION_CODE_FAMILY) ] <- 
+dat$LOCATION_CODE[ is.na(dat$LOCATION_CODE_FAMILY) ]
+
+# select the form and part you want
+forms <- "SCHED-A" #type the form or schedule here
+part <- "PART-01" #type the part here
+d <- dat %>% filter ( FORM == forms & FORM_PART == part )
+```
+
+```{r, results="asis", echo=F}
+#| output: asis
+
+rlist <- list()
+
+withTags( 
+  div( h2( paste( forms, part, sep = " " ) )
+  )
+)
+
+for( i in 1:nrow(d) )
+{
+  vname   <- d$VARIABLE_NAME[i] 
+  vlabel  <- d$LABEL[i] 
+  vtype   <- d$DATA_TYPE_SIMPLE[i] 
+  vscope  <- d$VARIABLE_SCOPE[i] 
+  vdesc   <- d$DESCRIPTION[i] 
+  vlevels <- "(0) No; (1) Yes"
+  lcode   <- d$LOCATION_CODE_FAMILY[i]
+  
+  var.info <- 
+  containerize_v( vname=vname, 
+                  vlabel=vlabel, 
+                  vtype=vtype, 
+                  vscope=vscope, 
+                  vdesc=vdesc,
+                  vlevels=vlevels,
+                  lcode=lcode) 
+
+  rlist[[i]] <- var.info
+
+}
+
+renderTags( rlist )$html
+```
+
+<link href='https://fonts.googleapis.com/css?family=Fira Code' rel='stylesheet'> <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Anonymous+Pro" />
+
+```{=html}
+<style>
+
+@import url('https://fonts.cdnfonts.com/css/aharoni');
+
+.parent {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    grid-template-rows: auto;
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
+    grid-template-areas:
+      "a b b"
+      "c d d"
+      ". e e" ;
+}
+
+.div1 {
+    grid-area: a;
+    padding-left: 5px;
+}
+
+.div2 { 
+    grid-area: b;
+    padding-left: 5px;
+}
+
+.div3 { 
+    grid-area: c;
+    padding-left: 5px;
+}
+
+.div4 { 
+    grid-area: d;
+    padding-left: 5px;
+}
+
+.div1 p { 
+    font-family:"Calibri", sans-serif;
+    color: orange;
+    font-size: 1em;
+}
+
+.div2 p { 
+    font-family:"Calibri", sans-serif;
+    color: orange;
+    font-size: 1em;
+}
+
+.div3 table { width: 100%; }
+
+.div3 td { 
+    font-family:"Calibri", sans-serif;
+    font-size: 1em;
+}
+
+.div4 table { width: 100%; }
+
+.div4 td { 
+    font-family:"Calibri", sans-serif;
+    font-size: 1em;
+}
+
+h2 { 
+    font-family:"Calibri", sans-serif;
+    font-size: 2em;
+    background-color: gray;
+    color: white;
+}
+
+.table>tbody {
+    border-top: none;
+}
+
+.table>:not(caption)>*>* {
+    padding: 0rem 0rem;
+}
+
+tbody, tfoot, tr, td, th {
+    border-color: inherit;
+    border-style: none; 
+    border-width: 0;
+}
+
+#pb_agent .gt_table {
+    border-top-width: 0px; 
+    /* border-top-color: #A8A8A8; */
+}  
+
+#pb_agent .gt_title {
+    font-size: 1.3em !important;
+}
+
+#pb_agent .gt_left { color: black !important; }
+
+</style>
+```
