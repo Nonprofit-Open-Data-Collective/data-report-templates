@@ -15,47 +15,6 @@ library( pointblank )
 library( knitr )
 ```
 
-```{r, results="asis", include=F}
-
-containerize_v <- function( vname, vlabel, vtype, vscope, vdesc, lcode )
-{
-  v <- 
-  tagList(
-    
-    div( class="parent",
-      div( class="div1", p( paste0( vname, ".........." ) ) ),
-      div( class="div2", p( vlabel ) ), 
-      div( class="div3", withTags(
-        table(
-                tr(
-                    td( "DATA TYPE: " ),
-                    td( vtype  )
-                  ),
-                tr(
-                    td( "SCOPE: "  ),
-                    td( vscope  )
-                  )
-             )
-      ) ),
-      div( class="div4", withTags(
-        table(
-                tr(
-                    td( "DESCRIPTION: " ),
-                    td( vdesc )
-                  ),
-                tr(
-                    td( "LOCATION CODE: " ),
-                    td( lcode )
-                  )
-             )
-    ) )
-    ),
-    withTags(  HTML("<br><hr><br>"), p('\n')  )
-  )
-  return(v)
-} 
-```
-
 ```{r, include=F}
 dat <- read.csv( "concordance-v98.csv" )
 names( dat ) <- toupper( names( dat ) )
@@ -73,6 +32,49 @@ dat$LOCATION_CODE[ is.na(dat$LOCATION_CODE_FAMILY) ]
 forms <- "SCHED-A" #type the form or schedule here
 part <- "PART-01" #type the part here
 d <- dat %>% filter ( FORM == forms & FORM_PART == part )
+
+# use this generic table for the factor levels
+flevels <- 
+structure(list(FLEVEL = c("AL", "AK", "AZ", "AR", "CA", "CO"
+), LABEL = c("Alabama", "Alaska", "Arizona", "Arkansas", 
+"California", "Colorado")), row.names = c(NA, 6L), class = "data.frame")
+
+to_table <- function( f, format="html" )
+            {
+              t <- table( flevels )
+              t2 <- as.data.frame(t)
+              names(t2) <- c("Level","Label")
+              t2 %>% kable( format )
+            }
+f <- flevels
+
+# create div4
+create_div4 <- function (vdesc, lcode)
+{
+  v <- 
+  tagList(
+      div( class="div4", withTags(
+        table(
+                tr(
+                    td( "DESCRIPTION: " ),
+                    td( vdesc )
+                  ),
+                tr(
+                    td( "VARIABLE LEVELS: "),
+                  ),
+                tr(
+                    table( 
+                          td( to_table( f, format="html" ) ) )
+                  ),
+                tr(
+                    td( "LOCATION CODE: " ),
+                    td( lcode )
+                  )
+             )
+    ) )
+    )
+  return(v)
+}
 ```
 
 ```{r, results="asis", echo=F}
@@ -80,27 +82,14 @@ d <- dat %>% filter ( FORM == forms & FORM_PART == part )
 
 rlist <- list()
 
-withTags( 
-  div( h2( paste( forms, part, sep = " " ) )
-  )
-)
-
 for( i in 1:nrow(d) )
 {
-  vname   <- d$VARIABLE_NAME[i] 
-  vlabel  <- d$LABEL[i] 
-  vtype   <- d$DATA_TYPE_SIMPLE[i] 
-  vscope  <- d$VARIABLE_SCOPE[i] 
   vdesc   <- d$DESCRIPTION[i]
   lcode   <- d$LOCATION_CODE_FAMILY[i]
   
   var.info <- 
-  containerize_v( vname=vname, 
-                  vlabel=vlabel, 
-                  vtype=vtype, 
-                  vscope=vscope, 
-                  vdesc=vdesc,
-                  lcode=lcode) 
+  create_div4( vdesc=vdesc,
+               lcode=lcode) 
 
   rlist[[i]] <- var.info
 
