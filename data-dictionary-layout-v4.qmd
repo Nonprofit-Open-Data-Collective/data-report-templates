@@ -15,10 +15,6 @@ library( pointblank )
 library( knitr )
 ```
 
-
-
-
-
 ```{r}
 flevels <- 
 structure(list(FLEVEL = c("AL", "AK", "AZ", "AR", "CA", "CO"
@@ -134,23 +130,22 @@ create_section( x1=desc, x2=k, x3=loc )
 
 ```
 
-
-<br> 
-<hr>
 <br>
 
+<hr>
+
+<br>
 
 ```{r, results="asis"}
 # results="asis"
 create_section( x1=desc, x2=k, x3=loc )
 ```
 
-
-
-<br> 
-<hr>
 <br>
 
+<hr>
+
+<br>
 
 ```{r, eval=F}
 
@@ -172,17 +167,13 @@ print_dd <- function( dfg, vars=c("r2","r2","r3"), group.name=NULL )
 }
 ```
 
-
-
 ```{r, eval=F}
 print_dd( dfg, vars( %in% partiii ), group.name="Part III" )
 
 print_dd( dfg, vars( %in% partiv ), group.name="Part IV" )
 ```
 
-
-
-```
+```         
 ##  EXAMPLE OF 
 ##  WHAT FINAL
 ##  MARKDOWN
@@ -205,13 +196,7 @@ DEFINITION: Lorem Ipsum is simply dummy text of the printing and typesetting ind
 LOCATION CODE:   SCHED-A-PART-01-LINE-01
 
 :::
-
 ```
-
-
-
-
-
 
 <link href='https://fonts.googleapis.com/css?family=Fira Code' rel='stylesheet'> <link rel="stylesheet" type="text/css" href="//fonts.googleapis.com/css?family=Anonymous+Pro" />
 

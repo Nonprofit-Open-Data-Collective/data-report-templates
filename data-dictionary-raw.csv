@@ -1,0 +1,89 @@
+dg_vname,dg_vlabel,dg_vdesc,dg_vtype,dg_flevels,variable_scope,location_code_family,location_code,form,form_type,form_part,form_line_number,data_type_xsd,rdb_relationship,rdb_table
+F9_00_ALL_AFFIL_INCL_X,All subordinates included [x],Indicates this form includes all subordinate organizations ;; All affiliates included?,logical,,HD,F990-PC-PART-00-SECTION-HB,F990-PC-PART-00-SECTION-HB,F990,PC,PART-00,Section H(b),BooleanType,ONE,F9-P00-T00-HEADER
+F9_00_BUILD_TIME_STAMP,Build time stamp,Build time stamp - IRS internal field,date,,HD,F990-PC-PART-00-LINE-00,F990-PC-PART-00-LINE-00,F990,PC,PART-00,Line 00,,ONE,F9-P00-T00-HEADER
+F9_00_EXEMPT_STAT_4947A1_X,4947(a)(1) organization [x],Indicates a 4947(a)(1) organization,logical,,HD,F990-PC-PART-00-SECTION-I,F990-EZ-PART-00-SECTION-J,F990,EZ,PART-00,Section J,CheckboxType,ONE,F9-P00-T00-HEADER
+F9_00_EXEMPT_STAT_501C_X,501(c) organization [x],Indicates a 501(c) organization,logical,,HD,F990-PC-PART-00-SECTION-I,F990-EZ-PART-00-SECTION-J,F990,EZ,PART-00,Section J,CheckboxType,ONE,F9-P00-T00-HEADER
+F9_00_EXEMPT_STAT_501C3_X,501(c)(3) organization [x],Indicates a 501(c)(3) organization,logical,,HD,F990-PC-PART-00-SECTION-I,F990-EZ-PART-00-SECTION-J,F990,EZ,PART-00,Section J,CheckboxType,ONE,F9-P00-T00-HEADER
+F9_00_EXEMPT_STAT_527_X,527 organization [x],Indicates a 527 organization,logical,,HD,F990-PC-PART-00-SECTION-I,F990-PC-PART-00-SECTION-I,F990,PC,PART-00,Section I,,ONE,F9-P00-T00-HEADER
+F9_00_EXEMPT_STAT,Type of exemption,Type of organizational tax exempt status granted,factor,"[ 
+  { ""flevel"" : ""1"",  ""flabel"" : ""01- Corporations originated under Act of Congress, including Federal Credit Unions"" }, 
+  { ""flevel"" : ""2"",  ""flabel"" : ""02- Title holding corporation for a tax-exempt organization."" }, 
+  { ""flevel"" : ""3"",  ""flabel"" : ""03- Religious, educational, charitable, scientific, and literary organizations"" }, 
+  { ""flevel"" : ""4"",  ""flabel"" : ""04- Civic leagues, social welfare organizations, and local associations of employees"" }, 
+  { ""flevel"" : ""5"",  ""flabel"" : ""05- Labor, agricultural, horticultural organizations. These are eduactional or instruct. grps"" }, 
+  { ""flevel"" : ""6"",  ""flabel"" : ""06- Business leagues, chambers of commerce, real estate boards, etc. formed to improve conditions"" }, 
+  { ""flevel"" : ""7"",  ""flabel"" : ""07- Social and recreational clubs which provide pleasure, recreation, and social activities."" }, 
+  { ""flevel"" : ""8"",  ""flabel"" : ""08- Fraternal beneficiary societies and associations, with lodges providing for payment of life"" }, 
+  { ""flevel"" : ""9"",  ""flabel"" : ""09- Voluntary employees beneficiary assns (including fed. employees voluntary beneficiary\n10\t10- Domestic fraternal societies and assocs-lodges devoting their net earnings to charitable"" }, 
+  { ""flevel"" : ""11"",  ""flabel"" : ""11- Teachers retirement fund associations."" }, 
+  { ""flevel"" : ""12"",  ""flabel"" : ""12- Benevolent life insurance associations, mutual ditch or irrigation companies, mutual or coop"" }, 
+  { ""flevel"" : ""13"",  ""flabel"" : ""13- Cemetery companies, providing burial and incidental activities for members."" }, 
+  { ""flevel"" : ""14"",  ""flabel"" : ""14- State-chartered credit unions, mutual reserve funds, offering loans to members"" }, 
+  { ""flevel"" : ""15"",  ""flabel"" : ""15- Mutual insurance cos. ar associations, providing insurance to members substantially at cost"" }, 
+  { ""flevel"" : ""16"",  ""flabel"" : ""16- Cooperative organizations to finance crop operations, in conjunction with activities "" }, 
+  { ""flevel"" : ""17"",  ""flabel"" : ""17- Supplemental unemployment benefit trusts, providing payments of suppl. unemployment comp"" }, 
+  { ""flevel"" : ""18"",  ""flabel"" : ""18- Employee funded pension trusts, providing benefits under a pension plan funded by employees"" }, 
+  { ""flevel"" : ""19"",  ""flabel"" : ""19- Post or organization of war veterans."" }, 
+  { ""flevel"" : ""20"",  ""flabel"" : ""20- Trusts for prepaid group legal services, as part of a qual. group legal service plan or plans."" }, 
+  { ""flevel"" : ""21"",  ""flabel"" : ""21- Black lung trusts, satisfying claims for compensation under Black Lung Acts."" }, 
+  { ""flevel"" : ""22"",  ""flabel"" : ""22- Multiemployer Pension Plan"" }, 
+  { ""flevel"" : ""23"",  ""flabel"" : ""23- Veterans association formed prior to 1880"" }, 
+  { ""flevel"" : ""24"",  ""flabel"" : ""24-Trust described in Section 4049 of ERISA"" }, 
+  { ""flevel"" : ""25"",  ""flabel"" : ""25- Title Holding Company for Pensions, etc"" }, 
+  { ""flevel"" : ""26"",  ""flabel"" : ""26- State-Sponsored High Risk Health Insurance Organizations"" }, 
+  { ""flevel"" : ""27"",  ""flabel"" : ""27- State-Sponsored Workers Compensation Reinsurance"" }, 
+  { ""flevel"" : ""40"",  ""flabel"" : ""40- Apostolic and religious orgs. - 501(d)"" }, 
+  { ""flevel"" : ""50"",  ""flabel"" : ""50- Cooperative Hospital Service Organization - 501(e)"" }, 
+  { ""flevel"" : ""60"",  ""flabel"" : ""60- Cooperative Service Org. of Operating Educ. Org.- 501(f)"" }, 
+  { ""flevel"" : ""70"",  ""flabel"" : ""70- Child Care Organization - 501(k)"" }, 
+  { ""flevel"" : ""71"",  ""flabel"" : ""71- Charitable Risk Pool"" }, 
+  { ""flevel"" : ""80"",  ""flabel"" : ""80- Farmers Cooperatives"" }, 
+  { ""flevel"" : ""81"",  ""flabel"" : ""81- Qualified State-Sponsored Tuition Program"" }, 
+  { ""flevel"" : ""82"",  ""flabel"" : ""82- 527 Political Organizations"" }, 
+  { ""flevel"" : ""90"",  ""flabel"" : ""90- 4947(a)(2) Split Interest Trust"" }, 
+  { ""flevel"" : ""91"",  ""flabel"" : ""91- 4947(a)(1) Public Charity (Files 990/990-EZ)"" }, 
+  { ""flevel"" : ""92"",  ""flabel"" : ""92- 4947(a)(1) Private Foundations"" }, 
+  { ""flevel"" : ""93"",  ""flabel"" : ""93- 1381(a)(2) Taxable Farmers Cooperative"" }, 
+  { ""flevel"" : ""CO"",  ""flabel"" : ""CO- Unspecified 501(c) Organization Other Than 501(c)(3)""}
+] ",HD,,,,,,,,,
+F9_00_FORM_ADDR_CHANGE_X,Address change [x],Indicates this form has an address change ;; Indicates this return has an address change,logical,,HD,F990-PC-PART-00-SECTION-B,F990-EZ-PART-00-SECTION-B,F990,EZ,PART-00,Section B,CheckboxType,ONE,F9-P00-T00-HEADER
+F9_00_FORM_AMENDED_RETURN_X,Amended return [x],Inidcates this form is an amended return ;; Indicates this return is an amended return,logical,,HD,F990-PC-PART-00-SECTION-B,F990-EZ-PART-00-SECTION-B,F990,EZ,PART-00,Section B,CheckboxType,ONE,F9-P00-T00-HEADER
+F9_00_FORM_FINAL_RETURN_X,Final return [x],Inidcates this form is a final return ;; Indicates this return is a final return ;; Indicates this return is a termination return,logical,,HD,F990-PC-PART-00-SECTION-B,F990-EZ-PART-00-SECTION-B,F990,EZ,PART-00,Section B,CheckboxType,ONE,F9-P00-T00-HEADER
+F9_00_FORM_INITIAL_RETURN_X,Initial return [x],Inidcates this form is an initial return ;; Indicates this is an initial return,logical,,HD,F990-PC-PART-00-SECTION-B,F990-EZ-PART-00-SECTION-B,F990,EZ,PART-00,Section B,CheckboxType,ONE,F9-P00-T00-HEADER
+F9_00_GRO_RCPT,Gross receipts,Gross Receipts (Header) ;; Gross receipts,numeric,,HD,F990-PC-PART-00-SECTION-G,F990-EZ-PART-00-SECTION-L,F990,EZ,PART-00,Section L,USAmountNNType,ONE,F9-P00-T00-HEADER
+F9_00_GROUP_EXEMPT_NUM,Group exemption number,Group exemption number,numeric,,HD,F990-PC-PART-00-SECTION-HC,F990-EZ-PART-00-SECTION-F,F990,EZ,PART-00,Section F,StringType,ONE,F9-P00-T00-HEADER
+F9_00_GROUP_RETURN_AFFIL_X,Group return for subordinates [x],Indicates this form is a group return for subordinates ;; Group return for affiliates?,logical,,HD,F990-PC-PART-00-SECTION-HA,F990-PC-PART-00-SECTION-HA,F990,PC,PART-00,Section H(a),BooleanType,ONE,F9-P00-T00-HEADER
+F9_00_LEGAL_DMCL_CNTR,Country of legal domicile,Countryof legam domicile ;; Country of legal domicile,factor,,HD,F990-PC-PART-00-SECTION-M,F990-PC-PART-00-SECTION-M,F990,PC,PART-00,Section M,CountryType,ONE,F9-P00-T00-HEADER
+F9_00_LEGAL_DMCL_STATE,State of legal domicile,State of legal domicile,factor,,HD,F990-PC-PART-00-SECTION-M,F990-PC-PART-00-SECTION-M,F990,PC,PART-00,Section M,StateType,ONE,F9-P00-T00-HEADER
+F9_00_NAME_ORG_CTRL,Organization name,Name of Filing Organization (Control Text),text,,HD,F990-PC-PART-00-LINE-00,F990-PC-PART-00-LINE-00,F990,PC,PART-00,Line 00,BusinessNameControlType,ONE,F9-P00-T00-HEADER
+F9_00_ORG_ADDR_CITY,Organization city,Address of Filing Organization (US City) ;; Address of Filing Organization (Foreign City),text,,HD,F990-PC-PART-00-SECTION-C,F990-EZ-PART-00-SECTION-C,F990,EZ,PART-00,Section C,TextType ;; CityType,ONE,F9-P00-T00-HEADER
+F9_00_ORG_ADDR_CNTR,Organization country,Address of Filing Organization (Foreign Country),text,,HD,F990-PC-PART-00-SECTION-C,F990-PC-PART-00-SECTION-C,F990,PC,PART-00,Section C,CountryType,ONE,F9-P00-T00-HEADER
+F9_00_ORG_ADDR_IN_CARE_OF,In care of,In care of,text,,HD,F990-PC-PART-00-SECTION-C,F990-PC-PART-00-SECTION-C,F990,PC,PART-00,Section C,InCareOfNameType,ONE,F9-P00-T00-HEADER
+F9_00_ORG_ADDR_L1,Organization street address line 1,Address of Filing Organization (US Line 1) ;; Address of Filing Organization (Foreign Line 1),text,,HD,F990-PC-PART-00-SECTION-C,F990-EZ-PART-00-SECTION-C,F990,EZ,PART-00,Section C,StreetAddressType,ONE,F9-P00-T00-HEADER
+F9_00_ORG_ADDR_L2,Organization street address line 2,Address of Filing Organization (Foreign Line 2) ;; Address of Filing Organization (US Line 2),text,,HD,F990-PC-PART-00-SECTION-C,F990-PC-PART-00-SECTION-C,F990,PC,PART-00,Section C,StreetAddressType,ONE,F9-P00-T00-HEADER
+F9_00_ORG_ADDR_STATE,Organization state,Address of Filing Organization (US State) ;; Address of Filing Organization (Foreign Province or State),text,,HD,F990-PC-PART-00-SECTION-C,F990-EZ-PART-00-SECTION-C,F990,EZ,PART-00,Section C,TextType ;; StateType,ONE,F9-P00-T00-HEADER
+F9_00_ORG_ADDR_ZIP,Organization zip,Address of Filing Organization (US Zip Code) ;; Address of Filing Organization (Foreign Postal Code),text,,HD,F990-PC-PART-00-SECTION-C,F990-EZ-PART-00-SECTION-C,F990,EZ,PART-00,Section C,TextType ;; ZIPCodeType,ONE,F9-P00-T00-HEADER
+F9_00_ORG_EIN,EIN,Orgainization Employer Identification Number (EIN),numeric,,HD,F990-PC-PART-00-SECTION-D,F990-PC-PART-00-SECTION-D,F990,PC,PART-00,Section D,EINType,ONE,F9-P00-T00-HEADER
+F9_00_RETURN_TIME_STAMP,Return time stamp,The date and time when the return was created,date,,HD,F990-PC-PART-00-LINE-00,F990-PC-PART-00-LINE-00,F990,PC,PART-00,Line 00,TimestampType,ONE,F9-P00-T00-HEADER
+F9_00_RETURN_TYPE,Return type,Return type,factor,"[
+ {""stat"":""n_missing"",""Petal.Width"":""0""},
+ {""stat"":""complete_rate"",""Petal.Width"":""1""},
+ {""stat"":""mean"",""Petal.Width"":""1.199333""},
+ {""stat"":""sd"",""Petal.Width"":""0.7622377""},
+ {""stat"":""p0"",""Petal.Width"":""0.1""},
+ {""stat"":""p25"",""Petal.Width"":""0.3""},
+ {""stat"":""p50"",""Petal.Width"":""1.30""},
+ {""stat"":""p75"",""Petal.Width"":""1.8""},
+ {""stat"":""p100"",""Petal.Width"":""2.5""},
+ {""stat"":""hist"",""Petal.Width"":""?????""}
+]",HD,F990-PC-PART-00-LINE-00,F990-PC-PART-00-LINE-00,F990,PC,PART-00,Line 00,StringType,ONE,F9-P00-T00-HEADER
+F9_00_SPECIAL_COND_DESC,Special condition description,Special condition description,text,,HD,F990-PC-PART-00-LINE-00,F990-EZ-PART-00-LINE-00,F990,EZ,PART-00,Line 00,TextType,ONE,F9-P00-T00-HEADER
+F9_00_TAX_PERIOD_BEGIN_DATE,Tax period begin date,Tax period begin date,date,,HD,F990-PC-PART-00-SECTION-A,F990-PC-PART-00-SECTION-A,F990,PC,PART-00,Section A,DateType,ONE,F9-P00-T00-HEADER
+F9_00_TAX_PERIOD_END_DATE,Tax period end date,Tax period end date,date,,HD,F990-PC-PART-00-SECTION-A,F990-PC-PART-00-SECTION-A,F990,PC,PART-00,Section A,DateType,ONE,F9-P00-T00-HEADER
+F9_00_TAX_YEAR,Tax year,Tax year,date,,HD,F990-PC-PART-00-SECTION-A,F990-PC-PART-00-SECTION-A,F990,PC,PART-00,Section A,YearType,ONE,F9-P00-T00-HEADER
+F9_00_TYPE_ORG_ASSOC_X,Association [x],Form of organization: Association ;; Type of organization - association,logical,,HD,F990-PC-PART-00-SECTION-K,F990-EZ-PART-00-SECTION-K,F990,EZ,PART-00,Section K,CheckboxType,ONE,F9-P00-T00-HEADER
+F9_00_TYPE_ORG_CORP_X,Corporation [x],Form of organization: Corporation ;; Type of organization - corporation,logical,,HD,F990-PC-PART-00-SECTION-K,F990-EZ-PART-00-SECTION-K,F990,EZ,PART-00,Section K,CheckboxType,ONE,F9-P00-T00-HEADER
+F9_00_TYPE_ORG_OTH_DESC,Other form of organization description,Form of organization Other Description ;; IRS990 - TypeOfOrgOtherDescriptionInd ;; Form of organization: Other Description ;; Type of organization - other description,text,,HD,F990-PC-PART-00-SECTION-K,F990-EZ-PART-00-SECTION-K,F990,EZ,PART-00,Section K,LineExplanationType,ONE,F9-P00-T00-HEADER
+F9_00_TYPE_ORG_OTH_X,Other form of organization [x],Form of organization: Other ;; Type of organization - other,logical,,HD,F990-PC-PART-00-SECTION-K,F990-EZ-PART-00-SECTION-K,F990,EZ,PART-00,Section K,CheckboxType,ONE,F9-P00-T00-HEADER
+F9_00_TYPE_ORG_TRUST_X,Trust [x],Form of organization: Trust ;; Type of organization - trust,logical,,HD,F990-PC-PART-00-SECTION-K,F990-EZ-PART-00-SECTION-K,F990,EZ,PART-00,Section K,CheckboxType,ONE,F9-P00-T00-HEADER
+F9_00_YEAR_FORMATION,Year of formation,Year of formation,date,,HD,F990-PC-PART-00-SECTION-L,F990-PC-PART-00-SECTION-L,F990,PC,PART-00,Section L,YearType,ONE,F9-P00-T00-HEADER
