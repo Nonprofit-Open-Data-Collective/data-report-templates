@@ -16,6 +16,8 @@ library( knitr )
 ```
 
 ```{r}
+#| echo: false
+
 vname <- "VARNAME"
 
 vlabel <- "Ipsum is simply dummy text of the printing and typesetting industry."
@@ -167,7 +169,7 @@ create_div7( x10=s )
 create_div8 <- function( )
 {
   cat( "::: {.div8} \n\n" )
-  cat( barplot(table(cut(rnorm(1000),10)),col="steelblue") )
+  barplot(table(cut(rnorm(1000),10)),col="steelblue") 
   cat( "::: \n\n" )
 }
 
@@ -202,33 +204,80 @@ create_section <- function( x1=vname,
     create_div5( x8=p )
     create_div6( x9=q )
     create_div7( x10=s )
-    #create_div8( )
+    create_div8( )
     create_div9( x11=t3k )
     cat( ":::::" )
 }
 
-create_section( x1=vname, x2=vlabel, x3=vtype, x4=vscope, x5=desc, x6=k, x7=loc, x8=p, x9=q, x10=s, x11=t3k )
-
 ```
 
-<br>
 
+
+
+<br>
 <hr>
-
 <br>
+
+{{< pagebreak >}}
 
 ```{r, results="asis"}
 # results="asis"
-create_section( x1=vname, x2=vlabel, x3=vtype, x4=vscope, x5=desc, x6=k, x7=loc, x8=p, x9=q, x10=s )
+create_section( x1=vname, x2=vlabel, x3=vtype, x4=vscope, 
+                x5=desc, x6=k, x7=loc, x8=p, x9=q, x10=s )
 ```
 
-<br>
+{{< pagebreak >}}
 
+<br>
 <hr>
+<br>
+
+
+```{r}
+create_section2 <- function( x1=vname,
+                            x2=vlabel, x2.lab="LABEL",
+                            x3=vtype, x3.lab="DATA TYPE", 
+                            x4=vscope, x4.lab="SCOPE",
+                            x5=desc, x5.lab="DESCRIPTION", 
+                            x6=k, x6.lab="LEVELS", 
+                            x7=loc, x7.lab="LOCATION CODE",
+                            x8=p, x8.lab="Properties",
+                            x9=q, x9.lab="Quantiles",
+                            x10=s, x10.lab="Statistics",
+                            x11=t3k, x11.lab="Example values")
+{
+    cat( "::::: {.parent} \n\n" )
+    create_div1( x1=vname )
+    # create_div2( x2=vlabel )
+    create_div3( x3=vtype, x4=vscope )
+    create_div4( x5=desc, x6=k, x7=loc )
+    create_div5( x8=p )
+    # create_div6( x9=q )
+    create_div7( x10=s )
+    create_div8( )
+    # create_div9( x11=t3k )
+    cat( ":::::" )
+}
+```
+
+
+```{r, results="asis"}
+# results="asis"
+create_section2( x1=vname, x2=vlabel, x3=vtype, x4=vscope, 
+                x5=desc, x6=k, x7=loc, x8=p, x9=q, x10=s )
+```
+
+
 
 <br>
+<hr>
+<br>
+
+
+
 
 ```{r, eval=F}
+#| echo: false
 
 get_section <- function( row.name )
 {
@@ -248,10 +297,15 @@ print_dd <- function( dfg, vars=c("r2","r2","r3"), group.name=NULL )
 ```
 
 ```{r, eval=F}
+#| echo: false
+
 print_dd( dfg, vars( %in% partiii ), group.name="Part III" )
 
 print_dd( dfg, vars( %in% partiv ), group.name="Part IV" )
 ```
+
+
+
 
 ```{=html}
 <style>
@@ -261,7 +315,7 @@ print_dd( dfg, vars( %in% partiv ), group.name="Part IV" )
 .parent {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    grid-template-rows: auto;  /* repeat(2, 0.2fr) 1fr 1fr; */
+    grid-template-rows: auto;  /* repeat(2, 0.2fr) 1fr 1fr 1fr; */
     grid-column-gap: 20px;
     grid-row-gap: 10px;
     grid-template-areas:
@@ -271,6 +325,8 @@ print_dd( dfg, vars( %in% partiv ), group.name="Part IV" )
       "e f g" 
       "h i i";
 }
+
+
 
 .div1 { grid-area: a; }
 
@@ -307,7 +363,17 @@ print_dd( dfg, vars( %in% partiv ), group.name="Part IV" )
 .div8 { 
     grid-area: h;
     padding-left: 50px;
+    display: grid;
 }
+
+.div8 .cell-output-display { 
+    display: grid;
+}
+
+.div8 p { 
+    display: grid;
+}
+
 
 .div9 { 
     grid-area: i;
@@ -390,6 +456,10 @@ h5 { font-size: 0.9em; }
     margin-left: 20px;
 }
 
+.table {
+    width: 80%;
+}
+
 .table>tbody {
     border-top: none;
 }
@@ -405,6 +475,39 @@ tbody, tfoot, tr, td, th {
 }
 
 
+.div5 tr {
+  border-bottom: 1px solid;
+  border-color: #D3D3D3;
+}
+
+.div5 th {
+  display:none;
+}
+
+.div6 tr {
+  border-bottom: 1px solid;
+  border-color: #D3D3D3;
+}
+
+.div6 th {
+  display:none;
+}
+
+.div7 tr {
+  border-bottom: 1px solid;
+  border-color: #D3D3D3;
+}
+
+.div7 th {
+  display:none;
+}
+
+.div8 img, svg {
+    /* vertical-align: bottom;*/
+    align-self: end;
+    justify-self: end;
+}
+
 #pb_agent .gt_table {
     border-top-width: 0px; 
     /* border-top-color: #A8A8A8; */
@@ -415,6 +518,26 @@ tbody, tfoot, tr, td, th {
 }
 
 #pb_agent .gt_left { color: black !important; }
+
+
+@media print {
+   body {
+   display:table;
+   table-layout:fixed;
+   padding-top:2.5cm;
+   padding-bottom:3cm;
+   padding-left:1.5cm;
+   padding-right:1.5cm;
+   height:auto;
+    }
+}
+
+@page {
+  @bottom-right {
+    content: counter(page) " of " counter(pages);
+  }
+}
+
 
 </style>
 ```
