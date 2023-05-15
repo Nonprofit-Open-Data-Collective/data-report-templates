@@ -14,9 +14,11 @@ library( dplyr )
 library( pointblank )
 library( knitr )
 library( gt )
+library( kableExtra )
+library( psych )
 ```
 
-```{r, results="asis"}
+```{r}
 #| echo: false
 
 vname <- "VARNAME"
@@ -48,11 +50,6 @@ dgf <- data.frame( desc, loc )
 
 k <- kable( flevels )
 
-prop <- 
-structure(list(p1 = c("Distinct (n)", "Distinct (%)", "Missing (n)", 
-"Missing (%)"), p2 = c("49156", "3.7", "934", "0.3")), class = "data.frame", row.names = c(NA, 
--4L))
-
 quant <- 
 structure(list(q1 = c("Q-05", "Q-25", "Q-50", "Q-75", "Q-95"), 
     q2 = c(0, 100, 500, 900, 1234)), class = "data.frame", row.names = c(NA, 
@@ -62,8 +59,6 @@ stats <-
 structure(list(s1 = c("Min", "Median", "Mean", "Max", "Skew", 
 "Kurtosis"), s2 = c("x", "x", "x", "x", "x", "x")), class = "data.frame", row.names = c(NA, 
 -6L))
-
-p <- kable( prop )
 
 q <- kable( quant )
 
@@ -80,11 +75,6 @@ e <- tab_options( e, column_labels.hidden = T )
 e <- data_color( e,
                    palette=scales::col_numeric( c( "white", "aquamarine3" ),
                                                 domain=NULL ) )
-
-
-
-
-
 
 to_txt_string <- function( x, x.lab=NULL )
 {
@@ -105,6 +95,48 @@ v_to_txt <- function( v, v.lab )
   { to_txt_string( x=v, x.lab=v.lab ) }
   if( class(v) == "knitr_kable" )
   { to_txt_factor( x=v, x.lab=v.lab ) }
+}
+
+x <- rnorm( 1000 )
+
+build_proptable_numeric <- function( x, x.lab=NULL )
+{
+  dist <- length( unique( x ) )
+  dist.p <- dist/length( x )
+  miss <- sum( is.na( x ) )
+  miss.p <- miss/length( x )
+  prop.value <- c( dist, dist.p, miss, miss.p )
+  prop.labels <- c( "Distinct (n)", "Distinct (%)", "Missing (n)", "Missing (%)" )
+  properties <- data.frame( prop.labels, prop.value )
+  cat( paste0( "##### ", x.lab, "\n\n" ) )
+  cat( paste0( kable( properties ), " \n" ), sep="" )
+  cat( "\n\n" )
+}
+
+build_quanttable_numeric <- function( x, x.lab=NULL )
+{
+  quant.value <- quantile( x, c( 0.05, 0.25, 0.50, 0.75, 0.95 ) )
+  quant.labels <- c( "Q-05", "Q-25", "Q-50", "Q-75", "Q-95" )
+  quant <- data.frame( quant.labels, quant.value )
+  cat( paste0( "##### ", x.lab, "\n\n" ) )
+  cat( paste0( remove_column( kable( quant ), 1 ), " \n" ), sep="" )
+  cat( "\n\n" )
+}
+
+build_stattable_numeric <- function( x, x.lab=NULL )
+{
+  min <- min( x, na.rm=T )
+  median <- median( x, na.rm=T )
+  mean <- mean( x, na.rm=T )
+  max <- max( x, na.rm=T )
+  skew <- skew( x, na.rm=T )
+  kurt <- kurtosi( x, na.rm=T )
+  stat.value <- c( min, median, mean, max, skew, kurt)
+  stat.labels <- c( "Min", "Median", "Mean", "Max", "Skew", "Kurt" )
+  stat <- data.frame( stat.labels, stat.value )
+  cat( paste0( "##### ", x.lab, "\n\n" ) )
+  cat( paste0( kable( stat ), " \n" ), sep="" )
+  cat( "\n\n" )
 }
 
 create_div1 <- function( x1=vname )
@@ -149,32 +181,32 @@ create_div4 <- function( x5=desc, x5.lab="DESCRIPTION",
 
 create_div4( x5=desc, x6=k, x7=loc )
 
-create_div5 <- function( x8=p, x8.lab="Properties")
+create_div5 <- function( x8=x, x8.lab="Properties" )
 {
   cat( "::: {.div5} \n\n" )
-  v_to_txt( x8, x8.lab )
+  build_proptable_numeric( x8, x8.lab )
   cat( "::: \n\n" )
 }
 
-create_div5( x8=p )
+create_div5( x8=x )
 
-create_div6 <- function( x9=q, x9.lab="Quantiles" )
+create_div6 <- function( x9=x, x9.lab="Quantiles" )
 {
   cat( "::: {.div6} \n\n" )
-  v_to_txt( x9, x9.lab )
+  build_quanttable_numeric( x9, x9.lab )
   cat( "::: \n\n" )
 }
 
-create_div6( x9=q )
+create_div6( x9=x )
 
-create_div7 <- function( x10=s, x10.lab="Statistics" )
+create_div7 <- function( x10=x, x10.lab="Statistics" )
 {
   cat( "::: {.div7} \n\n" )
-  v_to_txt( x10, x10.lab )
+    build_stattable_numeric( x10, x10.lab )
   cat( "::: \n\n" )
 }
 
-create_div7( x10=s )
+create_div7( x10=x )
 
 create_div8 <- function( x11.lab="Histogram" )
 {
@@ -203,9 +235,9 @@ create_section <- function( x1=vname,
                             x5=desc, x5.lab="DESCRIPTION", 
                             x6=k, x6.lab="LEVELS", 
                             x7=loc, x7.lab="LOCATION CODE",
-                            x8=p, x8.lab="Properties",
-                            x9=q, x9.lab="Quantiles",
-                            x10=s, x10.lab="Statistics",
+                            x8=x, x8.lab="Properties",
+                            x9=x, x9.lab="Quantiles",
+                            x10=x, x10.lab="Statistics",
                             x11.lab="Histogram",
                             x12=e, x12.lab="Example values")
 {
@@ -215,9 +247,9 @@ create_section <- function( x1=vname,
     create_div2( x2=vlabel )
     create_div3( x3=vtype, x4=vscope )
     create_div4( x5=desc, x6=k, x7=loc )
-    create_div5( x8=p )
-    create_div6( x9=q )
-    create_div7( x10=s )
+    create_div5( x8=x )
+    create_div6( x9=x )
+    create_div7( x10=x )
     create_div8( )
     create_div9( x12=e )
     cat( "::::: \n\n" )
@@ -233,7 +265,7 @@ create_section <- function( x1=vname,
 
 ```{r, results="asis"}
 # results="asis"
-create_section( x1=vname, x2=vlabel, x3=vtype, x4=vscope, x5=desc, x6=k, x7=loc, x8=p, x9=q, x10=s, x12=e )
+create_section( x1=vname, x2=vlabel, x3=vtype, x4=vscope, x5=desc, x6=k, x7=loc, x8=x, x9=x, x10=x, x12=e )
 ```
 
 <br>
