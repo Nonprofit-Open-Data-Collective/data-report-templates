@@ -13,6 +13,7 @@ library( htmltools )
 library( dplyr )
 library( pointblank )
 library( knitr )
+library( gt )
 ```
 
 ```{r}
@@ -72,9 +73,20 @@ s <- kable( stats )
 vals <- round( rnorm(25,100000,100000), 0 )
 
 # convert to table 
-t3 <- as.data.frame( matrix( vals, nrow=5 ) )
+#t3 <- as.data.frame( matrix( vals, nrow=5 ) )
 
-t3k <- kable( t3 )
+#t3k <- kable( t3 )
+
+e <- gt( as.data.frame( matrix( vals, nrow=5 ) ) )
+
+e <- tab_options( e, column_labels.hidden = T )
+
+e <- data_color( e,
+                   palette=scales::col_numeric( c( "white", "aquamarine3" ),
+                                                domain=NULL ) )
+
+
+
 
 to_txt_string <- function( x, x.lab=NULL )
 {
@@ -166,23 +178,24 @@ create_div7 <- function( x10=s, x10.lab="Statistics" )
 
 create_div7( x10=s )
 
-create_div8 <- function( )
+create_div8 <- function( x11.lab="Histogram" )
 {
   cat( "::: {.div8} \n\n" )
-  barplot(table(cut(rnorm(1000),10)),col="steelblue") 
-  cat( "::: \n\n" )
+  cat( paste0( "##### ", x11.lab, "\n\n" ) )
+  barplot(table(cut(rnorm(1000),10)),col="steelblue")
+  cat( "\n::: \n\n" )
 }
 
-create_div8( )
+create_div8( x11.lab="Histogram" )
 
-create_div9 <- function( x11=t3k, x11.lab="Example values" )
+create_div9 <- function( x12=e, x12.lab="Example values" )
 {
   cat( "::: {.div9} \n\n" )
-  v_to_txt( x11, x11.lab )
+  v_to_txt( x12, x12.lab )
   cat( "::: \n\n" )
 }
 
-create_div9( x11=t3k )
+#create_div9( x12=e )
 
 create_section <- function( x1=vname,
                             x2=vlabel, x2.lab="LABEL",
@@ -194,7 +207,8 @@ create_section <- function( x1=vname,
                             x8=p, x8.lab="Properties",
                             x9=q, x9.lab="Quantiles",
                             x10=s, x10.lab="Statistics",
-                            x11=t3k, x11.lab="Example values")
+                            x11.lab="Histogram",
+                            x12=e, x12.lab="Example values")
 {
     cat( "{{< pagebreak >}} \n\n")  # add page break between variables?
     cat( "::::: {.parent} \n\n" )
@@ -206,7 +220,7 @@ create_section <- function( x1=vname,
     create_div6( x9=q )
     create_div7( x10=s )
     create_div8( )
-    create_div9( x11=t3k )
+ #   create_div9( x12=e )
     cat( "::::: \n\n" )
 }
 
@@ -220,8 +234,7 @@ create_section <- function( x1=vname,
 
 ```{r, results="asis"}
 # results="asis"
-create_section( x1=vname, x2=vlabel, x3=vtype, x4=vscope, 
-                x5=desc, x6=k, x7=loc, x8=p, x9=q, x10=s )
+create_section( x1=vname, x2=vlabel, x3=vtype, x4=vscope, x5=desc, x6=k, x7=loc, x8=p, x9=q, x10=s, x12=e )
 ```
 
 <br>
@@ -260,8 +273,7 @@ create_section2 <- function( x1=vname,
 
 ```{r, results="asis"}
 # results="asis"
-create_section2( x1=vname, x2=vlabel, x3=vtype, x4=vscope, 
-                x5=desc, x6=k, x7=loc, x8=p, x9=q, x10=s )
+create_section( x1=vname, x2=vlabel, x3=vtype, x4=vscope, x5=desc, x6=k, x7=loc, x8=p, x9=q, x10=s, x12=e )
 ```
 
 <br>
