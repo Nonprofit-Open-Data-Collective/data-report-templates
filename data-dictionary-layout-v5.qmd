@@ -100,7 +100,7 @@ v_to_txt <- function( v, v.lab )
 create_div1 <- function( x1=vname )
 {
   cat( "::: {.div1} \n\n" )
-  cat( paste0( x1, "\n\n" ) )
+  cat( paste0( "#### ", x1, "\n\n" ) )
   cat( "::: \n\n" )
 }
 
@@ -196,6 +196,7 @@ create_section <- function( x1=vname,
                             x10=s, x10.lab="Statistics",
                             x11=t3k, x11.lab="Example values")
 {
+    cat( "{{< pagebreak >}} \n\n")  # add page break between variables?
     cat( "::::: {.parent} \n\n" )
     create_div1( x1=vname )
     create_div2( x2=vlabel )
@@ -206,7 +207,7 @@ create_section <- function( x1=vname,
     create_div7( x10=s )
     create_div8( )
     create_div9( x11=t3k )
-    cat( ":::::" )
+    cat( "::::: \n\n" )
 }
 
 ```
@@ -218,7 +219,6 @@ create_section <- function( x1=vname,
 <hr>
 <br>
 
-{{< pagebreak >}}
 
 ```{r, results="asis"}
 # results="asis"
@@ -226,7 +226,6 @@ create_section( x1=vname, x2=vlabel, x3=vtype, x4=vscope,
                 x5=desc, x6=k, x7=loc, x8=p, x9=q, x10=s )
 ```
 
-{{< pagebreak >}}
 
 <br>
 <hr>
@@ -246,6 +245,7 @@ create_section2 <- function( x1=vname,
                             x10=s, x10.lab="Statistics",
                             x11=t3k, x11.lab="Example values")
 {
+    cat( "{{< pagebreak >}} \n\n")  # add page break between variables?
     cat( "::::: {.parent} \n\n" )
     create_div1( x1=vname )
     # create_div2( x2=vlabel )
@@ -391,7 +391,7 @@ h4 {
     font-family: Georgia, Times, "Times New Roman", serif; 
     /* font-family: 'Fira Code'; */
     /* font-family: 'Aharoni', sans-serif; */
-    font-size: 2.2em;
+    font-size: 1.8em;
     font-weight: 700;  
     /* line-height: 120px; */ 
 }
@@ -530,12 +530,6 @@ tbody, tfoot, tr, td, th {
    padding-right:1.5cm;
    height:auto;
     }
-}
-
-@page {
-  @bottom-right {
-    content: counter(page) " of " counter(pages);
-  }
 }
 
 
